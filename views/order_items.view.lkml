@@ -6,7 +6,13 @@ view: order_items {
     primary_key: yes
     type: number
     sql: ${TABLE}.id ;;
+    link: {
+      label: "test link"
+      url: "/dashboards/862?Date%20test={{_filters['order_items.returned_date'] | url_encode }}"
+    }
   }
+
+
 
   dimension: inventory_item_id {
     type: number
@@ -18,6 +24,11 @@ view: order_items {
     type: number
     # hidden: yes
     sql: ${TABLE}.order_id ;;
+  }
+
+  measure: min_order_id {
+    type: min
+    sql: ${order_id} ;;
   }
 
   dimension_group: returned {
@@ -39,8 +50,23 @@ view: order_items {
     sql: ${TABLE}.sale_price ;;
   }
 
+  measure: summed_sale_price {
+    type: sum
+    sql: ${sale_price} ;;
+  }
+
+  measure: average_sale_price {
+    type: average
+    sql: ${sale_price} ;;
+  }
+
   measure: count {
     type: count
     drill_fields: [id, orders.id, inventory_items.id]
+  }
+
+  measure: count_filtered {
+    type: count
+    filters: [id: "-1"]
   }
 }

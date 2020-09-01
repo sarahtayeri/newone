@@ -6,6 +6,13 @@ view: flights {
     sql: ${TABLE}.arr_delay ;;
   }
 
+
+  dimension: cohort_month {
+    type: string
+    sql:"sarah";;
+    html: <a href="/explore/mixmax/fct_revenue_customers_monthly_changes_details?fields=fct_revenue_customers_monthly_changes_details.cohort_month,fct_revenue_customers_monthly_changes_details.stripe_customer_id,fct_revenue_customers_monthly_changes_details.admin_email,fct_revenue_customers_monthly_changes_details.account_name, fct_revenue_customers_monthly_changes_details.sf_account_id, fct_revenue_customers_monthly_changes_details.change_month,fct_revenue_customers_monthly_changes_details.change_type,fct_revenue_customers_monthly_changes_details.prev_month_mrr,fct_revenue_customers_monthly_changes_details.delta_mrr,fct_revenue_customers_monthly_changes_details.current_mrr&f[fct_revenue_customers_monthly_changes_details.cohort_month]={{ value }}">{{value}}</a>;;
+  }
+
   dimension_group: arr {
     type: time
     timeframes: [

@@ -49,9 +49,31 @@ view: users {
     sql: ${TABLE}.city ;;
   }
 
+  dimension: comma {
+    type: string
+    sql: concat(${city}, ", ", ${state}) ;;
+    link: {
+      label: "this one works"
+      url: "/explore/sarah_ecomm/order_items?fields=users.email&f[users.comma]= {{filterable_value | url_encode }}"
+    }
+    link: {
+      label: "this one doesn't work"
+      url: "/explore/sarah_ecomm/order_items?fields=users.email&f[users.comma]= {{ filterable_value }}"
+    }
+    link: {
+      label: "also doesn't work"
+      url: "/explore/sarah_ecomm/order_items?fields=users.email&f[users.comma]= {{ value | url_encode }}"
+    }
+  }
+
   dimension: country {
     type: string
     map_layer_name: countries
+    link: {
+      label: "for ._filterable_value"
+      url: "/explore/sarah_ecomm/order_items?fields=users.email&f[users.comma]={{users.comma._filterable_value | url_encode }}"
+      #need to use ._filterable_value and url_encode
+    }
     sql: ${TABLE}.country ;;
   }
 
@@ -97,6 +119,16 @@ view: users {
   dimension: state {
     type: string
     sql: ${TABLE}.state ;;
+    map_layer_name: us_states
+    link: {
+      label: "link label"
+      url: "https://google.com"
+    }
+  }
+
+  dimension: dummy {
+    type: string
+    sql: "sarah" ;;
   }
 
   dimension: state_2 {
@@ -112,6 +144,26 @@ view: users {
   measure: count {
     type: count
     drill_fields: [detail*]
+  }
+
+  measure: count_test {
+    type: count_distinct
+    sql: ${state} ;;
+  }
+
+  measure: count2 {
+    type: count
+    drill_fields: [id, first_name]
+    link: {
+      label: "sarah"
+      url: "https://google.com"
+    }
+  }
+
+  measure: zip_count_dist {
+    type: count_distinct
+    sql: ${zip} ;;
+    drill_fields: [zip]
   }
 
   # ----- Sets of fields for drilling ------

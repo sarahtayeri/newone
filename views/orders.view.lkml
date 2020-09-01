@@ -6,6 +6,10 @@ view: orders {
     primary_key: yes
     type: number
     sql: ${TABLE}.id ;;
+    link: {
+      label: "link to Dash B"
+      url: "/dashboards/832?Dash%20B%20Date%20Filter={{ _filters['orders.created_date'] }}&First%20Name={{users.first_name._value}}&Gender={{users.gender._value}}"
+    }
   }
 
   dimension_group: created {
@@ -28,9 +32,27 @@ view: orders {
     sql: MAX(${created_date}) ;;
   }
 
+
+  parameter: status_param {
+    allowed_value: {
+      value: "cancelled"
+    }
+    allowed_value: {
+      value: "pending"
+    }
+    allowed_value: {
+      value: "complete"
+    }
+  }
+
   dimension: status {
     type: string
     sql: ${TABLE}.status ;;
+  }
+
+  dimension: dynamic_filter {
+    type: yesno
+    sql: {% parameter status_param %} = ${status} ;;
   }
 
   dimension: user_id {

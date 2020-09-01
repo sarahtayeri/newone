@@ -8,9 +8,26 @@ datagroup: sarah_ecomm_default_datagroup {
   max_cache_age: "1 hour"
 }
 
+#datagroup: sarah_test_if_it_will_show {}
+
 persist_with: sarah_ecomm_default_datagroup
 
-explore: connection_reg_r3 {}
+map_layer: census_tract {
+  format: "vector_tile_region"
+  url: "https://a.tiles.mapbox.com/v4/dwmintz.3zfb3asw/{z}/{x}/{y}.mvt?access_token=@{mapbox_api_key}"
+  feature_key: "us_tracts-6w08eq"
+  extents_json_url: "https://cdn.rawgit.com/dwmintz/census_extents2/396e32db/tract_extents.json"
+  min_zoom_level: 6
+  max_zoom_level: 14
+  property_key: "GEOID"
+}
+
+explore: map {}
+
+explore: connection_reg_r3 {
+}
+
+explore: karlee {}
 
 explore: events {
   join: users {
