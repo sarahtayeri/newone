@@ -15,9 +15,15 @@ datagroup: testing_pdtlog {
   max_cache_age: "24 hours"
 }
 
+
+
+explore: testing_persistence {
+  persist_with: testing_pdtlog
+}
+
 #datagroup: sarah_test_if_it_will_show {}
 
-persist_with: sarah_ecomm_default_datagroup
+#persist_with: sarah_ecomm_default_datagroup
 
 map_layer: census_tract {
   format: "vector_tile_region"
