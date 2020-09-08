@@ -13,9 +13,28 @@ view: order_items {
   }
 
 
+  dimension: fake_url {
+    type: string
+    sql: "https://google.com" ;;
+  }
+
+  dimension: url_nickname {
+    type: string
+    sql: SUBSTRING(${fake_url}, 9, 6) ;;
+    html: <a href="https://google.com">{{ value }}</a> ;;
+
+  }
+
+
+
+
 
   dimension: inventory_item_id {
+    #label: "<font color='green'> Inventory Item ID </font>"
+    label: "<div style='color:blue;text-align:center'> text here </div>"
+    #label: "<div style='padding-left:25px;padding-right:25px'> text here </div>"
     type: number
+    html: <div style='color:blue;text-align:center'> text here </div> ;;
     # hidden: yes
     sql: ${TABLE}.inventory_item_id ;;
   }

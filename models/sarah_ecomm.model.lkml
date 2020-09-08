@@ -8,6 +8,13 @@ datagroup: sarah_ecomm_default_datagroup {
   max_cache_age: "1 hour"
 }
 
+
+
+datagroup: testing_pdtlog {
+  sql_trigger: SELECT max(id) FROM demo_db.events ;;
+  max_cache_age: "24 hours"
+}
+
 #datagroup: sarah_test_if_it_will_show {}
 
 persist_with: sarah_ecomm_default_datagroup
@@ -22,7 +29,9 @@ map_layer: census_tract {
   property_key: "GEOID"
 }
 
-explore: map {}
+explore: map_dt {
+  persist_with: testing_pdtlog
+}
 
 explore: connection_reg_r3 {
 }
@@ -73,7 +82,21 @@ explore: order_items {
     sql_on: ${inventory_items.product_id} = ${products.id} ;;
     relationship: many_to_one
   }
+
+  join: ndt_test {
+    type: left_outer
+    sql_on: ${inventory_items.product_id}=${ndt_test.id} ;;
+    relationship: many_to_one
+  }
+
+
 }
+
+
+# explore: testforndt {
+#   extends: [order_items]
+#   from: order_items
+# }
 
 explore: orders {
   join: users {

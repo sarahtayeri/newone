@@ -1,4 +1,4 @@
-view: map {
+view: map_dt {
   derived_table: {
     sql:
 
