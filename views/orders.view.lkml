@@ -26,6 +26,12 @@ view: orders {
     sql: ${TABLE}.created_at ;;
   }
 
+
+  dimension: created_week_test {
+    type: date_week
+    sql: ${created_week} ;;
+  }
+
   measure: max_date {
     type: date
     convert_tz: no
@@ -59,6 +65,12 @@ view: orders {
     type: number
     # hidden: yes
     sql: ${TABLE}.user_id ;;
+  }
+
+  measure: exxxx {
+    type: count_distinct
+    sql: ${id} ;;
+    html: {{orders.status._rendered_value}} ;;
   }
 
   measure: count {

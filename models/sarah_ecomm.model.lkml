@@ -9,6 +9,8 @@ datagroup: sarah_ecomm_default_datagroup {
 }
 
 
+##testing
+
 
 datagroup: testing_pdtlog {
   sql_trigger: SELECT max(id) FROM demo_db.events ;;
@@ -92,6 +94,12 @@ explore: order_items {
   join: ndt_test {
     type: left_outer
     sql_on: ${inventory_items.product_id}=${ndt_test.id} ;;
+    relationship: many_to_one
+  }
+
+  join: monthly_sales {
+    type: left_outer
+    sql_on: ${order_items.returned_month}=${monthly_sales.returned_month} ;;
     relationship: many_to_one
   }
 
