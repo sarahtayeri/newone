@@ -7,6 +7,7 @@ view: flights {
   }
 
 
+
   dimension: cohort_month {
     type: string
     sql:"sarah";;
