@@ -36,10 +36,23 @@ view: events {
   dimension: value {
     type: string
     sql: ${TABLE}.value ;;
+    link: {
+      url: "{{url_string._value}}"
+    }
+  }
+
+  dimension: url_string {
+    type: string
+    sql: "https://google.com" ;;
   }
 
   measure: count {
     type: count
     drill_fields: [id, users.last_name, users.id, users.first_name]
   }
+
+
+
+
+
 }

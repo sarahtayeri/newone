@@ -95,6 +95,12 @@ explore: order_items {
     relationship: many_to_one
   }
 
+  join: monthly_sales {
+    type: left_outer
+    sql_on: ${order_items.returned_month}=${monthly_sales.returned_month} ;;
+    relationship: many_to_one
+  }
+
 
 }
 

@@ -45,6 +45,11 @@ view: order_items {
     sql: ${TABLE}.order_id ;;
   }
 
+  dimension: order_id_string {
+    type: string
+    sql: ${TABLE}.order_id ;;
+  }
+
   measure: min_order_id {
     type: min
     sql: ${order_id} ;;
@@ -77,6 +82,7 @@ view: order_items {
   measure: average_sale_price {
     type: average
     sql: ${sale_price} ;;
+    value_format_name: usd
   }
 
   measure: count {
