@@ -6,6 +6,26 @@ view: products {
     primary_key: yes
     type: number
     sql: ${TABLE}.id ;;
+    link: {
+      url: "https://dcl.dev.looker.com/dashboards/920?ilma={{_filters['products.test_link']}}"
+      label: "test me"
+    }
+  }
+
+  parameter: test_link {
+    type: unquoted
+    allowed_value: {
+      value: "apple"
+    }
+    allowed_value: {
+      value: "banana"
+    }
+  }
+
+  dimension: asldkfj {
+    type: string
+    sql: {% if test_link._parameter_value == 'apple' %} "this is a" {% elsif test_link._parameter_value == 'banana' %} "this is b" {% else %} "broken" {% endif %};;
+    #sql: {% parameter test_link %} ;;
   }
 
   dimension: brand {

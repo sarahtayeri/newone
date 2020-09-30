@@ -1,11 +1,23 @@
 connection: "thelook"
 
 # include all the views
-include: "/views/**/*.view"
+include: "/views/*.view"
+include: "*.view"
+include: "/ex_folder/view5.view"
 
 datagroup: sarah_ecomm_default_datagroup {
   # sql_trigger: SELECT MAX(id) FROM etl_log;;
   max_cache_age: "1 hour"
+}
+
+access_grant: alan_1 {
+  user_attribute: alans_test
+  allowed_values: ["1"]
+}
+
+access_grant: alan_2 {
+  user_attribute: alans_test
+  allowed_values: ["2"]
 }
 
 
@@ -55,6 +67,12 @@ explore: events {
 }
 
 explore: flights {}
+
+explore: flights2 {}
+
+explore: flights3 {}
+
+
 
 explore: imgsrc1onerroralert2 {}
 
@@ -120,7 +138,9 @@ explore: orders {
   }
 }
 
-explore: products {}
+explore: products {
+  sql_always_where: ${products.id}={{ _user_attributes['sarah_blahhhh'] }} ;;
+}
 
 explore: saralooker {
   join: users {

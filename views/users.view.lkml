@@ -131,6 +131,12 @@ view: users {
     sql: "sarah" ;;
   }
 
+  dimension: statename {
+    type: string
+    sql: ${state} ;;
+    html: {{rendered_value}} - {{first_name._rendered_value}} ;;
+  }
+
   dimension: state_2 {
     type: string
     sql: CASE WHEN ${TABLE}.state="California" THEN "California" ELSE "Other" END ;;

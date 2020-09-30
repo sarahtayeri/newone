@@ -7,6 +7,8 @@ view: flights {
   }
 
 
+#ahhhhhhh
+
 
   dimension: cohort_month {
     type: string
@@ -107,14 +109,7 @@ view: flights {
     sql: ${TABLE}.taxi_out ;;
   }
 
-  dimension: stockton {
 
-    #this works
-    sql: {% if _user_attributes.['stockton'] == "True" and flights.taxi_in._in_query %}
-    "a"
-    {%else%}
-    "b" {%endif%};;
-  }
 
   measure: count {
     type: count

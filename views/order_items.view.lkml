@@ -90,6 +90,11 @@ view: order_items {
     drill_fields: [id, orders.id, inventory_items.id]
   }
 
+  measure: will_error {
+    type: number
+    sql: ${count}/${id} ;;
+  }
+
   measure: count_filtered {
     type: count
     filters: [id: "-1"]
