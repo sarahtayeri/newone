@@ -4,6 +4,7 @@ connection: "thelook"
 include: "/views/*.view"
 include: "*.view"
 include: "/ex_folder/view5.view"
+include: "/trevor.dashboard"
 
 datagroup: sarah_ecomm_default_datagroup {
   # sql_trigger: SELECT MAX(id) FROM etl_log;;
