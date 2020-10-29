@@ -25,6 +25,12 @@ view: order_items {
 
   }
 
+  dimension: html_kyle {
+    type: string
+    sql: "this is an example" ;;
+    html: <button type="button">Click Me!</button> ;;
+  }
+
 
 
 
@@ -45,8 +51,9 @@ view: order_items {
     sql: ${TABLE}.order_id ;;
   }
 
-  dimension: order_id_string {
-    type: string
+  dimension: order_id_formatting {
+    type: number
+    value_format_name: usd_0
     sql: ${TABLE}.order_id ;;
   }
 
@@ -83,6 +90,16 @@ view: order_items {
     type: average
     sql: ${sale_price} ;;
     value_format_name: usd
+  }
+
+  dimension: testing {
+    sql: case when {{ _field._name }} =order_items.summed_sale_price then "label1" when {{ _field._name }} =order_items.summed_sale_price then "label2" else "label3" end;;
+  }
+
+  measure: test {
+    type: number
+    sql: ${average_sale_price} ;;
+    required_fields: [id]
   }
 
   measure: count {

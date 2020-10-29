@@ -20,6 +20,28 @@ view: users {
     sql: ${age} ;;
   }
 
+  measure: max_id {
+    type: max
+    sql: ${id} ;;
+  }
+
+  measure: is_max {
+    type: yesno
+    sql: ${max_id}=${id} ;;
+  }
+
+  dimension: subquery {
+    type: number
+    sql: (select max(id) from users) ;;
+  }
+
+  dimension: sub_yesno {
+    type: yesno
+    sql: ${id}=${subquery} ;;
+  }
+
+
+
   parameter: age_parameter {
     allowed_value: {
       value: "Below 15"
@@ -120,10 +142,28 @@ view: users {
     type: string
     sql: ${TABLE}.state ;;
     map_layer_name: us_states
-    link: {
-      label: "link label"
-      url: "https://google.com"
-    }
+  }
+
+  parameter: state_parameter {
+    type: string
+    suggest_explore: users
+    suggest_dimension: state
+  }
+
+  filter: state_filter {
+    type: string
+    suggest_explore: users
+    suggest_dimension: state
+  }
+
+  dimension: dimstatefilter {
+    type: string
+    sql: {% condition state_filter %} ${state} {% endcondition %};;
+  }
+
+  dimension: yesnostateparameter {
+    type: yesno
+    sql: {% parameter state_parameter %} = ${state} ;;
   }
 
   dimension: dummy {
@@ -167,6 +207,7 @@ view: users {
   }
 
   measure: zip_count_dist {
+    description: "this is my description"
     type: count_distinct
     sql: ${zip} ;;
     drill_fields: [zip]

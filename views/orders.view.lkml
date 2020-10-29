@@ -8,8 +8,14 @@ view: orders {
     sql: ${TABLE}.id ;;
     link: {
       label: "link to Dash B"
-      url: "/dashboards/832?Dash%20B%20Date%20Filter={{ _filters['orders.created_date'] }}&First%20Name={{users.first_name._value}}&Gender={{users.gender._value}}"
+      url: "/dashboards/832?Dash%20B%20Date%20Filter={{ _filters['orders.created_date'] | url_encode }}&First%20Name={{users.first_name._value}}&Gender={{users.gender._value}}"
     }
+  }
+
+  dimension: ex {
+    type: string
+    sql: "hi";;
+   # html: https://google.com ;;
   }
 
   dimension_group: created {
@@ -27,8 +33,55 @@ view: orders {
   }
 
 
+  dimension: othniel {
+    type: string
+    sql: case when ${created_month}="2019-12" then "dec of 2019" else "other month" end ;;
+  }
+
+
+  parameter: red {
+    type: number
+  }
+
+  parameter: amber {
+    type: number
+  }
+
+  dimension: tolulope {
+    type: number
+    sql: ${orders.id};;
+  }
+
+  dimension: tolulope_2 {
+    type: number
+    sql: ${tolulope} ;;
+    html:
+    <a href="#drillmenu" target="_self">
+    {% assign red = red._parameter_value | plus: 0 %}
+    {% assign amber = amber._parameter_value | plus: 0 %}
+
+    {% assign red_array = red | split: "." %}
+    {% assign red_decimal_count = red_array[1] | size %}
+    {% assign pct_late_parcel_round_red = tolulope._value  | round: red_decimal_count %}
+
+    {% assign amber_array = amber | split: "." %}
+    {% assign amber_decimal_count = amber_array[1] | size %}
+    {% assign pct_late_parcel_round_amber = tolulope._value  | round: amber_decimal_count %}
+
+    {% if pct_late_parcel_round_red <= red %}
+    <div style="color: black; background-color: rgba(224, 91, 91, 1); font-size:100%; text-align:center">{{linked_value}}</div>
+    {% elsif pct_late_parcel_round_amber <= amber %}
+    <div style="color: black; background-color: rgba(237, 172, 84, 1); font-size:100%; text-align:center">{{linked_value}}</div>
+    {% else %}
+    <div style="color: black; background-color: green; font-size:100%; text-align:center">{{linked_value}}</div>
+    {% endif %}
+    </a>
+    ;;
+  }
+
+
   dimension: created_week_test {
-    type: date_week
+    type: string
     sql: ${created_week} ;;
   }
 

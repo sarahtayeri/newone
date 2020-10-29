@@ -7,6 +7,17 @@ view: flights {
   }
 
 
+  dimension: decimal {
+    type: number
+    sql: 872/332 ;;
+  }
+
+  measure: decimal_measure {
+    type: number
+    sql: ${decimal} ;;
+  }
+
+
 #ahhhhhhh
 
 

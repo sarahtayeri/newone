@@ -2,24 +2,16 @@ connection: "thelook"
 
 # include all the views
 include: "/views/*.view"
-include: "*.view"
-include: "/ex_folder/view5.view"
 include: "/trevor.dashboard"
+
+
+
 
 datagroup: sarah_ecomm_default_datagroup {
   # sql_trigger: SELECT MAX(id) FROM etl_log;;
   max_cache_age: "1 hour"
 }
 
-access_grant: alan_1 {
-  user_attribute: alans_test
-  allowed_values: ["1"]
-}
-
-access_grant: alan_2 {
-  user_attribute: alans_test
-  allowed_values: ["2"]
-}
 
 
 ##testing
@@ -69,10 +61,6 @@ explore: events {
 
 explore: flights {}
 
-explore: flights2 {}
-
-explore: flights3 {}
-
 
 
 explore: imgsrc1onerroralert2 {}
@@ -84,6 +72,8 @@ explore: inventory_items {
     relationship: many_to_one
   }
 }
+
+explore: products2 {}
 
 explore: order_items {
   join: orders {
@@ -139,9 +129,7 @@ explore: orders {
   }
 }
 
-explore: products {
-  sql_always_where: ${products.id}={{ _user_attributes['sarah_blahhhh'] }} ;;
-}
+explore: products {}
 
 explore: saralooker {
   join: users {

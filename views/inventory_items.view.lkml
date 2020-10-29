@@ -8,6 +8,8 @@ view: inventory_items {
     sql: {% condition thing %} {% endcondition %};;
   }
 
+
+
   dimension: id {
     primary_key: yes
     type: number

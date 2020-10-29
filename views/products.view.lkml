@@ -2,15 +2,27 @@ view: products {
   sql_table_name: demo_db.products ;;
   drill_fields: [id]
 
+
+  parameter: id_param {
+    #suggest_dimension:
+  }
+
+  parameter: id_deanna_param {}
+
   dimension: id {
     primary_key: yes
     type: number
     sql: ${TABLE}.id ;;
-    link: {
-      url: "https://dcl.dev.looker.com/dashboards/920?ilma={{_filters['products.test_link']}}"
-      label: "test me"
-    }
   }
+
+  dimension: id_deanna {
+    type: number
+    sql: ${id}+1 ;;
+  }
+
+
+
+  filter: example {}
 
   parameter: test_link {
     type: unquoted
@@ -33,6 +45,7 @@ view: products {
     sql: ${TABLE}.brand ;;
   }
 
+
   dimension: category {
     type: string
     sql: ${TABLE}.category ;;
@@ -41,11 +54,6 @@ view: products {
   dimension: department {
     type: string
     sql: ${TABLE}.department ;;
-  }
-
-  dimension: fake_id {
-    type: number
-    sql: {{ _user_attributes['id'] }} ;;
   }
 
 
