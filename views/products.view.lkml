@@ -15,6 +15,10 @@ view: products {
     sql: ${TABLE}.id ;;
   }
 
+  dimension: id_faked {
+    sql: case when ${id}>50 and ${id}<60 then null else ${id} end ;;
+  }
+
   dimension: id_deanna {
     type: number
     sql: ${id}+1 ;;
