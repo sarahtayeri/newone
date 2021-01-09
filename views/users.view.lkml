@@ -13,6 +13,10 @@ view: users {
     sql: ${TABLE}.age ;;
   }
 
+  # dimension: test_product {
+  #   sql: ${products.brand} ;;
+  # }
+
   dimension: age_tier {
     type: tier
     style: integer
@@ -69,6 +73,12 @@ view: users {
   dimension: city {
     type: string
     sql: ${TABLE}.city ;;
+  }
+
+  dimension: should_be_hidden {
+    label: "1. SHOULD BE HIDDEN"
+    sql: "test" ;;
+    hidden: yes
   }
 
   dimension: comma {
@@ -131,11 +141,16 @@ view: users {
   dimension: is_female {
     type: yesno
     sql: ${gender}="f" ;;
+    html:  <a href="https://dcl.dev.looker.com/dashboards/938"><img src="https://cdn.arstechnica.net/wp-content/uploads/2020/05/GettyImages-953400484-800x533.jpg" /> ;;
   }
 
   dimension: last_name {
     type: string
     sql: ${TABLE}.last_name ;;
+    link: {
+      label: "casey"
+      url: "/looks/2068?&f[products.id]={{ _filters['users.id'] }}"
+    }
   }
 
   dimension: state {
@@ -187,9 +202,20 @@ view: users {
     sql: ${TABLE}.zip ;;
   }
 
+
+  dimension: new_tab {
+    type: string
+    sql: ${state} ;;
+    link: {
+      url: "https://dcl.dev.looker.com/dashboards/1020"
+      label: "should open new tab"
+    }
+  }
+
   measure: count {
     type: count
     drill_fields: [detail*]
+    html: {{ value }} - {{ first_name._rendered_value }} ;;
   }
 
   measure: count_test {

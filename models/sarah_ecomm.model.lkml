@@ -3,6 +3,7 @@ connection: "thelook"
 # include all the views
 include: "/views/*.view"
 include: "/trevor.dashboard"
+include: "/refine.explore"
 
 
 
@@ -59,7 +60,9 @@ explore: events {
   }
 }
 
-explore: flights {}
+explore: flights {
+  hidden: yes
+}
 
 
 
@@ -73,7 +76,10 @@ explore: inventory_items {
   }
 }
 
-explore: products2 {}
+explore: products2 {
+  from:  products
+}
+
 
 explore: order_items {
   join: orders {
@@ -100,11 +106,6 @@ explore: order_items {
     relationship: many_to_one
   }
 
-  join: ndt_test {
-    type: left_outer
-    sql_on: ${inventory_items.product_id}=${ndt_test.id} ;;
-    relationship: many_to_one
-  }
 
   join: monthly_sales {
     type: left_outer
@@ -129,7 +130,9 @@ explore: orders {
   }
 }
 
-explore: products {}
+explore: products {
+  cancel_grouping_fields: [products.department]
+}
 
 explore: saralooker {
   join: users {
@@ -141,7 +144,16 @@ explore: saralooker {
 
 explore: schema_migrations {}
 
+
+
+# access_grant: maria {
+#   user_attribute: maria_ua
+#   #allowed_values: ["@{maria_constant"]
+#   allowed_values: ["test_string"]
+# }
+
 explore: user_data {
+  # required_access_grants: [maria]
   join: users {
     type: left_outer
     sql_on: ${user_data.user_id} = ${users.id} ;;
@@ -149,7 +161,14 @@ explore: user_data {
   }
 }
 
-explore: users {}
+explore: users {
+  hidden: yes
+  join: products {
+    type: left_outer
+    sql_on: ${users.id}=${products.id} ;;
+    relationship: many_to_one
+  }
+}
 
 explore: vvimgsrc1onerroralert2ll {}
 

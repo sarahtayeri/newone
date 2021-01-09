@@ -1,7 +1,7 @@
 connection: "thelook"
 
 #my new comment
-
+#new
 
 include: "/views/*.view.lkml"                # include all views in the views/ folder in this project
 # include: "/**/view.lkml"                   # include all views in this project

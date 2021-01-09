@@ -24,6 +24,11 @@ view: user_data {
     sql: ${TABLE}.user_id ;;
   }
 
+  dimension: maria_string {
+    type: string
+    sql: "@{maria_constant}" ;;
+  }
+
   measure: count {
     type: count
     drill_fields: [id, users.last_name, users.id, users.first_name]

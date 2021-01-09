@@ -6,10 +6,10 @@ view: order_items {
     primary_key: yes
     type: number
     sql: ${TABLE}.id ;;
-    link: {
-      label: "test link"
-      url: "/dashboards/862?Date%20test={{_filters['order_items.returned_date'] | url_encode }}"
-    }
+    # link: {
+    #   label: "test link"
+    #   url: "/dashboards/862?Date%20test={{_filters['order_items.returned_date'] | url_encode }}"
+    # }
   }
 
 
@@ -104,7 +104,11 @@ view: order_items {
 
   measure: count {
     type: count
-    drill_fields: [id, orders.id, inventory_items.id]
+    drill_fields: [id, orders.id, inventory_items.id, average_sale_price]
+    link: {
+      label: "new drill"
+      url: "{{link}}&total=on"
+    }
   }
 
   measure: will_error {

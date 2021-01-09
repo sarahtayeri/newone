@@ -1,15 +1,32 @@
 view: orders {
   sql_table_name: demo_db.orders ;;
-  drill_fields: [id]
+  #drill_fields: [id]
 
   dimension: id {
     primary_key: yes
     type: number
     sql: ${TABLE}.id ;;
-    link: {
-      label: "link to Dash B"
-      url: "/dashboards/832?Dash%20B%20Date%20Filter={{ _filters['orders.created_date'] | url_encode }}&First%20Name={{users.first_name._value}}&Gender={{users.gender._value}}"
-    }
+
+  }
+
+  dimension: id_with_null {
+    type: number
+    sql: case when ${id}=10 then null else ${id} end ;;
+  }
+
+  measure: testa {
+    type: count
+    drill_fields: [id]
+  }
+
+  measure: testb {
+    type: count
+    drill_fields: [id, user_id]
+  }
+
+  measure: depends {
+    type: number
+    sql: {% if _user_attributes['sarah_string']='blue' %} ${testa} {% else %} ${testb} {% endif %} ;;
   }
 
   dimension: ex {
@@ -30,6 +47,37 @@ view: orders {
       year
     ]
     sql: ${TABLE}.created_at ;;
+  }
+
+  dimension: created_year_string {
+    type: string
+    sql: ${created_year} ;;
+  }
+
+  measure: rolling_sum {
+    type: sum
+    sql: ${id} ;;
+    filters: [created_date: "7 days ago for 7 days"]
+  }
+
+  dimension: jayaram {
+    type: date_raw
+    sql: ${created_raw} ;;
+  }
+
+  measure: max_date {
+    type: date
+    sql: max(${created_date}) ;;
+  }
+
+  measure: min_date {
+    type: date
+    sql: min(${created_date}) ;;
+  }
+
+  measure: number_days {
+    type: number
+    sql: DATEDIFF(${min_date}, ${max_date}) ;;
   }
 
 
@@ -85,11 +133,7 @@ view: orders {
     sql: ${created_week} ;;
   }
 
-  measure: max_date {
-    type: date
-    convert_tz: no
-    sql: MAX(${created_date}) ;;
-  }
+
 
 
   parameter: status_param {
@@ -128,6 +172,18 @@ view: orders {
 
   measure: count {
     type: count
-    drill_fields: [id, users.last_name, users.id, users.first_name, order_items.count]
+    drill_fields: [id, users.last_name, users.id, users.first_name, order_items.count, orders.count]
+    link: {
+      label: "to explore"
+      url: "/explore/sarah_ecomm/products?fields=products.brand,products.category"
+      }
+      description: "blah"
+  }
+
+
+
+  measure: count_coalesce {
+    type: number
+    sql: coalesce(${count}, 0) ;;
   }
 }
