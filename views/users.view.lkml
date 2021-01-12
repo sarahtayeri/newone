@@ -131,10 +131,10 @@ view: users {
   dimension: first_name {
     type: string
     sql: ${TABLE}.first_name ;;
-    link: {
-      label: "Click here for Dash B"
-      url: "/dashboards/832?Dash%20B%20Date%20Filter={{ _filters['orders.created_date'] }}&First%20Name={{value}}&Gender={{users.gender._value}}"
-    }
+    # link: {
+    #   label: "Click here for Dash B"
+    #   url: "/dashboards/832?Dash%20B%20Date%20Filter={{ _filters['orders.created_date'] }}&First%20Name={{value}}&Gender={{users.gender._value}}"
+    # }
   }
 
   dimension: gender {
@@ -150,6 +150,14 @@ view: users {
   dimension: last_name {
     type: string
     sql: ${TABLE}.last_name ;;
+    link: {
+      label: "Click here for Dash B"
+      url: "/dashboards/832?Dash%20B%20Date%20Filter={{ _filters['orders.created_date'] }}&Last%20Name={{ value }}&Gender={{users.gender._value}}"
+    }
+    link: {
+      label: "Click here for explore"
+      url: "/explore/sarah_ecomm/orders?fields=users.email,users.state,users.zip&f[users.last_name]={{value}}&f[orders.created_date]={{ _filters['orders.created_date'] }}"
+    }
   }
 
   dimension: state {
