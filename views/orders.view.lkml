@@ -36,6 +36,7 @@ view: orders {
   }
 
   dimension_group: created {
+    convert_tz:  no
     type: time
     timeframes: [
       raw,

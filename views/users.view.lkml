@@ -131,6 +131,10 @@ view: users {
   dimension: first_name {
     type: string
     sql: ${TABLE}.first_name ;;
+    link: {
+      label: "Click here for Dash B"
+      url: "/dashboards/832?Dash%20B%20Date%20Filter={{ _filters['orders.created_date'] }}&First%20Name={{value}}&Gender={{users.gender._value}}"
+    }
   }
 
   dimension: gender {
@@ -141,16 +145,11 @@ view: users {
   dimension: is_female {
     type: yesno
     sql: ${gender}="f" ;;
-    html:  <a href="https://dcl.dev.looker.com/dashboards/938"><img src="https://cdn.arstechnica.net/wp-content/uploads/2020/05/GettyImages-953400484-800x533.jpg" /> ;;
   }
 
   dimension: last_name {
     type: string
     sql: ${TABLE}.last_name ;;
-    link: {
-      label: "casey"
-      url: "/looks/2068?&f[products.id]={{ _filters['users.id'] }}"
-    }
   }
 
   dimension: state {
