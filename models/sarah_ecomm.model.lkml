@@ -170,6 +170,10 @@ explore: users {
   }
 }
 
+
+
+explore: sme {}
+
 explore: vvimgsrc1onerroralert2ll {}
 
 explore: xin_test_for_bug2 {}
