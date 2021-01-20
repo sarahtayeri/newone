@@ -87,6 +87,7 @@ view: products {
   measure: count_of_categories {
     type: count_distinct
     sql: ${category} ;;
+    html: <a href="{{ link }}"> {{rendered_value}}</a> ;;
   }
 
 

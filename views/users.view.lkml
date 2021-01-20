@@ -68,6 +68,11 @@ view: users {
     sql: {% parameter age_parameter %}=${age_tier} ;;
   }
 
+  dimension: hide_yesno {
+    type: yesno
+    sql: ${age}>=30 ;;
+  }
+
 
 
   dimension: city {

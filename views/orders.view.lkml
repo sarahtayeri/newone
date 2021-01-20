@@ -14,6 +14,8 @@ view: orders {
     sql: case when ${id}=10 then null else ${id} end ;;
   }
 
+
+
   measure: testa {
     type: count
     drill_fields: [id]
@@ -50,6 +52,20 @@ view: orders {
     sql: ${TABLE}.created_at ;;
   }
 
+
+  dimension: max_order_date {
+    type: date
+    sql: (SELECT MAX(DATE(orders.created_at)) FROM demo_db.orders) ;;
+  }
+
+  dimension: is_latest_date {
+    type: yesno
+    sql: ${created_date}=${max_order_date} ;;
+
+  }
+
+
+
   dimension: created_year_string {
     type: string
     sql: ${created_year} ;;
@@ -58,7 +74,7 @@ view: orders {
   measure: rolling_sum {
     type: sum
     sql: ${id} ;;
-    filters: [created_date: "7 days ago for 7 days"]
+    #filters: [created_date: "7 days ago for 7 days"]
   }
 
   dimension: jayaram {
@@ -68,6 +84,7 @@ view: orders {
 
   measure: max_date {
     type: date
+    convert_tz: no
     sql: max(${created_date}) ;;
   }
 
@@ -152,6 +169,16 @@ view: orders {
   dimension: status {
     type: string
     sql: ${TABLE}.status ;;
+  }
+
+  dimension: is_cancelled {
+    type: yesno
+    sql: ${status}="pending" OR ${status}="complete" ;;
+  }
+
+  measure: is_cancelled_measure {
+    type: yesno
+    sql: ${status}="pending" OR ${status}="complete" ;;
   }
 
   dimension: dynamic_filter {
