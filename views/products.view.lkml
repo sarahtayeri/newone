@@ -87,7 +87,14 @@ view: products {
   measure: count_of_categories {
     type: count_distinct
     sql: ${category} ;;
-    html: <a href="{{ link }}"> {{rendered_value}}</a> ;;
+    #html: <a href="{{ link }}"> {{rendered_value}}</a> ;;
+    #html: <p>{{linked_value}}</p>;;
+    #html: <font color="red">{{ linked_value }}</font> ;;
+    #html: {{rendered_value}} ;;
+    # link: {
+    #   label: "Click here for drill"
+    #   url: "{{ link }}&limit=5"
+    # }
   }
 
 

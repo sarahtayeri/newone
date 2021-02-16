@@ -37,7 +37,7 @@ view: order_items {
 
   dimension: inventory_item_id {
     #label: "<font color='green'> Inventory Item ID </font>"
-    label: "<div style='color:blue;text-align:center'> text here </div>"
+    #label: "<div style='color:blue;text-align:center'> text here </div>"
     #label: "<div style='padding-left:25px;padding-right:25px'> text here </div>"
     type: number
     html: <div style='color:blue;text-align:center'> text here </div> ;;
@@ -74,6 +74,40 @@ view: order_items {
       year
     ]
     sql: ${TABLE}.returned_at ;;
+  }
+
+
+  dimension: nasdfljsldkj {
+    sql: ${order_id} ;;
+  }
+
+
+  dimension: is_null {
+    type: yesno
+    sql: ${returned_raw} IS NULL ;;
+    link: {
+      url: "/explore/sarah_ecomm/order_items?fields=order_items.order_id,order_items.liquid_returned_date_workaround&f[order_items.liquid_returned_date_workaround]={{ liquid_returned_date_workaround._rendered_value }}"
+      label: "click"
+    }
+  }
+
+  dimension: liquid_returned_date_workaround {
+    type: date
+    convert_tz: no
+    sql: COALESCE(${returned_date}, "1990-01-01") ;;
+    html:
+      {% if is_null._value == 'Yes' %}
+      No returned date
+      {% else %}
+       {{value}}
+      {% endif %} ;;
+  }
+
+
+  dimension: test_date {
+    type: date
+    sql: ${returned_date} ;;
+    convert_tz: no
   }
 
   dimension: sale_price {

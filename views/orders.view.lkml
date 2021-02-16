@@ -3,6 +3,7 @@ view: orders {
   #drill_fields: [id]
 
   dimension: id {
+    value_format: "0"
     primary_key: yes
     type: number
     sql: ${TABLE}.id ;;
@@ -36,6 +37,22 @@ view: orders {
     sql: "hi";;
    # html: https://google.com ;;
   }
+
+
+
+  filter: date_filter {
+    type: date
+  }
+
+  dimension: keti {
+    type: yesno
+    sql: ${created_date}>= {% date_start date_filter %} and ${created_date}<= {% date_end date_filter %};;
+    }
+
+  # dimension: keti_2 {
+  #   type: yesno
+  #   sql: ${status} = ${keti} ;;
+  # }
 
   dimension_group: created {
     convert_tz:  no
@@ -116,6 +133,7 @@ view: orders {
   dimension: tolulope {
     type: number
     sql: ${orders.id};;
+    description: "does it show up"
   }
 
   dimension: tolulope_2 {
@@ -151,6 +169,10 @@ view: orders {
     sql: ${created_week} ;;
   }
 
+  dimension: custom_message {
+    type: string
+    sql: case when ${id}=1 then "This is my custom message" else null end;;
+  }
 
 
 
@@ -166,9 +188,25 @@ view: orders {
     }
   }
 
+
   dimension: status {
     type: string
     sql: ${TABLE}.status ;;
+  }
+
+  dimension: status_2 {
+    type: string
+    sql: {% if orders.status._is_filtered %} ${TABLE}.status {% else %} "blank" {% endif %};;
+  }
+
+  measure: status_list {
+    type: list
+    list_field: status
+  }
+
+  measure: status_listagg {
+    type: string
+    sql: LISTAGG(${status}) ;;
   }
 
   dimension: is_cancelled {
@@ -208,6 +246,16 @@ view: orders {
       description: "blah"
   }
 
+
+
+  measure: count_value_format {
+    type: count
+    #value_format: "€#,##0.00" doesn't work
+    #value_format: "\"€\"0" works
+    #value_format: "€#,##0" doesn't work
+    #value_format: "$#,##0.00" #works
+    value_format_name: eur
+  }
 
 
   measure: count_coalesce {

@@ -8,6 +8,18 @@ view: inventory_items {
     sql: {% condition thing %} {% endcondition %};;
   }
 
+  parameter: custom_date {
+    type: date
+  }
+
+  dimension: custom_date_start {
+    sql: {% date_start custom_date %} ;;
+  }
+
+  dimension: custom_date_end {
+    sql: {% date_end custom_date %} ;;
+  }
+
 
 
   dimension: id {
@@ -16,11 +28,7 @@ view: inventory_items {
     sql: ${TABLE}.id ;;
     link: {
       label: "test"
-      url: "https://google.com"
-    }
-    link: {
-      label: "test2"
-      url: "https://google.com"
+      url: "https://dcl.dev.looker.com/explore/sarah_ecomm/orders"
     }
   }
 
@@ -85,8 +93,20 @@ view: inventory_items {
       url: "{{ link }}"
     }
     link: {
-      label: "test2"
-      url: "https://google.com"
+      label: "test with new drills"
+      url: "{{ dummy_for_drill_fields._link }}"
     }
   }
+
+  measure: dummy_for_drill_fields {
+    hidden: yes
+    type: count
+    sql: 1=1;;
+    drill_fields: [id, sold_date, cost]
+  }
+
+
+
+
+
 }
