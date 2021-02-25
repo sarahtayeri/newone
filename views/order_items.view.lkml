@@ -76,8 +76,25 @@ view: order_items {
     sql: ${TABLE}.returned_at ;;
   }
 
+  dimension: returned_date2 {
+    type: date
+    sql: ${returned_date} ;;
+  }
+
+  dimension: roll {
+    type: yesno
+    sql: ${returned_date2} >= DATE_ADD(${returned_date}, INTERVAL -7 DAY);;
+  }
+
+  measure: rolling_sum {
+    type: sum
+    filters: [roll: "yes"]
+    sql: ${sale_price} ;;
+  }
+
 
   dimension: nasdfljsldkj {
+    group_label: "a group"
     sql: ${order_id} ;;
   }
 
